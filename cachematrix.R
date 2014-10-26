@@ -2,7 +2,9 @@
 ## functions do
 
 ## Write a short comment describing this function
-## This function creates a cache for a matrix
+## This function creates a cache for a matrix, if the cache does not yet exist
+## Or creates a cache and saves it
+
 makeCacheMatrix <- function(mat = numeric()) {
    inv <- NULL
    set <- function(newMat) {
@@ -10,6 +12,7 @@ makeCacheMatrix <- function(mat = numeric()) {
       m <<- NULL
    }   
    get <- function() mat
+   
    setinv <- function(i) inv <<- i
    getinv <- function() inv
    list(set = set, get = get,
@@ -28,7 +31,11 @@ cacheSolve <- function(mat, ...) {
       return(i)
    }
    data <- mat$get()
+   
+   # The actual inversion of the matrix
    i <- solve(data, ...)
+   
+   # Update the cache
    mat$setinv(i)
    i
 }
